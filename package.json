@@ -1,0 +1,21 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "playwright learning",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alineborak/playwright.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alineborak/playwright/issues"
+  },
+  "homepage": "https://github.com/alineborak/playwright#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.31.2"
+  }
+}
