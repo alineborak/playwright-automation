@@ -24,18 +24,21 @@ test.only('Login', async ({ browser }) => {
     await expect(page.url()).toContain('https://rahulshettyacademy.com/client/dashboard/order?prop=%5B%226262e990e26b7e1a10e89bfa%22%5D');
 
     // Asserting Email visibility 
-    const elementLocator = await page.locator('[class*="input txt text-validated ng-pristine ng-valid ng-touched"]').first().innerText();
-    console.log(elementLocator);
 
-    // const text = await elementLocator.innerText();
+    const mailField = await page.locator('.user__name.mt-5 input').nth(0).innerText();
 
-    // await expect(elementLocator).toEqual(email);
+    // const mailField = await page.locator('div').filter({ hasText: 'Shipping Information aline.bora@spritecloud.comPlace Order' }).locator('input[type="text"]').innerText();
+
+    // console.log(mailField.split(" ")[2]);
+    console.log(mailField);
+
+    // const text = await mailField.innerText();
+    // console.log(text);
+
+    // await expect(text).toEqual(email);
     // await expect (mailField).toHaveText(email);
 
     // await page.pause();
-
-
-
 
 
     await page.locator('input[class="input txt"]').nth(0).type('123');
