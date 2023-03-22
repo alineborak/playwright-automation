@@ -1,5 +1,4 @@
-const { test } = require('@playwright/test');
-const { expect } = require('../playwright.config');
+const { test, expect } = require('@playwright/test');
 
 test.only('Login', async ({ browser }) => {
     const context = await browser.newContext();
@@ -18,14 +17,27 @@ test.only('Login', async ({ browser }) => {
     await page.locator('button[class="btn w-10 rounded"]:text(" Add To Cart")').nth(1).click();
     await page.locator('[routerlink="/dashboard/cart"]').click();
 
-    // Fix asserting url | await expect(page).toHaveUrl('/client/dashboard/cart')
-    // Add assert for item in cart | await page.locator('[class="cartWrap ng-star-inserted"]').toBeVisible();
-
+    await expect(page.url()).toContain('/client/dashboard/cart');
+    await expect(page.locator('[class="cartWrap ng-star-inserted"]')).toBeVisible();
     await page.locator('[class="btn btn-primary"]:text("Checkout")').click();
 
-    // Fix asserting url | await expect(page).toHaveUrl('https://rahulshettyacademy.com/client/dashboard/order?prop=%5B%226262e95ae26b7e1a10e89bf0%22%5D');
+    await expect(page.url()).toContain('https://rahulshettyacademy.com/client/dashboard/order?prop=%5B%226262e990e26b7e1a10e89bfa%22%5D');
 
-    // Check asserting Email | await expect (page.locator('input[class="input txt text-validated ng-pristine ng-valid ng-touched"]')).toHaveText(email);
+    // Asserting Email visibility 
+    const elementLocator = await page.locator('[class*="input txt text-validated ng-pristine ng-valid ng-touched"]').first().innerText();
+    console.log(elementLocator);
+
+    // const text = await elementLocator.innerText();
+
+    // await expect(elementLocator).toEqual(email);
+    // await expect (mailField).toHaveText(email);
+
+    // await page.pause();
+
+
+
+
+
     await page.locator('input[class="input txt"]').nth(0).type('123');
     await page.locator('input[name="coupon"]').type('rahulshettyacademy');
     await page.locator('input[class="input txt"]').nth(1).type('Qaline Silva');
@@ -36,15 +48,14 @@ test.only('Login', async ({ browser }) => {
     await page.locator('a[class="btnn action__submit ng-star-inserted"]:text("Place Order ")').click();
     await page.locator('h1[class="hero-primary"]').textContent('Thankyou for the order.');
 
-    // Getting Order Number
+    // Getting Order Number and asserting on My Orders page
     const orderId = await page.locator('label[class="ng-star-inserted"]').textContent();
 
     await page.locator('button[routerlink="/dashboard/myorders"]').click();
     await page.locator('tbody').waitFor();
 
     const rows = await page.locator('tbody tr');
-
-    for (let i = 0; i<await rows.count(); ++i) {
+    for (let i = 0; i < await rows.count(); ++i) {
         const rowOrderId = await rows.nth(i).locator("th").textContent();
         if (orderId.includes(rowOrderId)) {
             await rows.nth(i).locator("button").first().click();
@@ -53,11 +64,6 @@ test.only('Login', async ({ browser }) => {
     }
 
     const orderIdDetails = await page.locator('[class*="col-text"]').textContent();
-    expect (orderId.includes(orderIdDetails)).toBeTruthy();
-    
-    await page.pause();
-    // await expect(page.locator('tr[class="ng-star-inserted"]').toHaveText(orderID));
-
-
-
+    expect(orderId.includes(orderIdDetails)).toBeTruthy();
+    // await expect(page.locator('tr[class="ng-star-inserted"]')).toHaveText(orderID);
 });
