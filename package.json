@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "playwright learning",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test tests/webApi1.spec.js --headed"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alineborak/playwright.git"
