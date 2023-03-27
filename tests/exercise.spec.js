@@ -1,16 +1,16 @@
 const { test, expect } = require('@playwright/test');
-
-test.only('Login', async ({ browser }) => {
+const { LoginPage } = require('../page-objects/LoginPage.js');
+test.only('Login and making an order', async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     const products = page.locator(".card-body");
-    const email = 'aline.bora@spritecloud.com'
+    const email = 'aline.bora@spritecloud.com';
+    const password = '2AvR5G@YAFXck4E';
+    const loginPage = new LoginPage(page);
 
     // Login
-    await page.goto("https://rahulshettyacademy.com/client/");
-    await page.locator('input[id="userEmail"]').type(email);
-    await page.locator('[id="userPassword"]').type('2AvR5G@YAFXck4E');
-    await page.locator('[id="login"]').click();
+    await loginPage.goTo();
+    await loginPage.validLogin(email, password);
     await products.count();
     await page.locator('[class="card"]').first().waitFor();
 
