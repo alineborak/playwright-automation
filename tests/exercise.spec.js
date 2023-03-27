@@ -32,12 +32,15 @@ test.only('Login', async ({ browser }) => {
     await page.locator('input[class="input txt"]').nth(1).type('Qaline Silva');
     await page.locator('input[placeholder="Select Country"]').type('Neth');
     await page.locator('button[class="ta-item list-group-item ng-star-inserted"]').nth(0).click();
-    await page.locator('[class="user__name mt-5"] [class="input txt text-validated ng-untouched ng-pristine ng-valid"]').textContent('aline.bora@spritecloud.com');
+    await page.locator('[class="user__name mt-5"] [class="input txt text-validated ng-untouched ng-pristine ng-valid"]').textContent(email);
+
+    //Place order and check confirmation of purchase page
     await page.locator('a[class="btnn action__submit ng-star-inserted"]:text("Place Order ")').click();
     await page.locator('h1[class="hero-primary"]').textContent('Thankyou for the order.');
 
-    // Getting Order Number and asserting on My Orders page
-    const orderId = await page.locator('label[class="ng-star-inserted"]').textContent();
+    // Getting Order ID Number and asserting on My Orders page
+    const orderId = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
+    console.log(orderId);
     await page.locator('button[routerlink="/dashboard/myorders"]').click();
     await page.locator('tbody').waitFor();
 
@@ -50,7 +53,7 @@ test.only('Login', async ({ browser }) => {
         }
     }
     // Check if order has been finalized
-    const orderIdDetails = await page.locator('[class*="col-text"]').textContent();
+    const orderIdDetails = await page.locator('.col-text').textContent();
+    console.log(orderIdDetails);
     expect(orderId.includes(orderIdDetails)).toBeTruthy();
-    // await expect(page.locator('tr[class="ng-star-inserted"]')).toContain(orderID);
 });
