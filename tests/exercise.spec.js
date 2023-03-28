@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const LoginPage = require('../page-objects/LoginPage');
 const DashboardPage = require('../page-objects/DashboardPage');
 
-test.only('Login and making an order', async ({ page }) => {
+test('Login and making an order', async ({ page }) => {
     const email = 'aline.bora@spritecloud.com';
     const password = '2AvR5G@YAFXck4E';
     const productName = 'zara coat 3';
