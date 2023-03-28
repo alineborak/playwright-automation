@@ -1,12 +1,11 @@
 const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../page-objects/LoginPage.js');
-test.only('Login and making an order', async ({ browser }) => {
-    const context = await browser.newContext();
-    const page = await context.newPage();
+const LoginPage = require('../page-objects/LoginPage');
+
+test.only('Login and making an order', async ({ page }) => {
+    const loginPage = new LoginPage(page);
     const products = page.locator(".card-body");
     const email = 'aline.bora@spritecloud.com';
     const password = '2AvR5G@YAFXck4E';
-    const loginPage = new LoginPage(page);
 
     // Login
     await loginPage.goTo();
@@ -26,7 +25,7 @@ test.only('Login and making an order', async ({ browser }) => {
 
     // Asserting Email visibility 
     const mailField = await page.locator('div.user__name.mt-5').innerText();
-    await expect (mailField).toContain(email);
+    await expect(mailField).toContain(email);
     await page.locator('input[class="input txt"]').nth(0).type('123');
     await page.locator('input[name="coupon"]').type('rahulshettyacademy');
     await page.locator('input[class="input txt"]').nth(1).type('Qaline Silva');
