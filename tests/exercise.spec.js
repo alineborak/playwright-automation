@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const LoginPage = require('../page-objects/LoginPage');
 const DashboardPage = require('../page-objects/DashboardPage');
 
-test('Login and making an order', async ({ page }) => {
+test.only('Login and making an order', async ({ page }) => {
     const email = 'aline.bora@spritecloud.com';
     const password = '2AvR5G@YAFXck4E';
     const productName = 'zara coat 3';
@@ -21,7 +21,7 @@ test('Login and making an order', async ({ page }) => {
     await expect(page.url()).toContain('/client/dashboard/cart');
     await expect(page.locator('[class="cartWrap ng-star-inserted"]')).toBeVisible();
     await page.locator('[class="btn btn-primary"]:text("Checkout")').click();
-    // await expect(page.url()).toContain('https://rahulshettyacademy.com/client/dashboard/order?prop=%5B%226262e990e26b7e1a10e89bfa%22%5D');
+    await expect(page.url()).toContain('https://rahulshettyacademy.com/client/dashboard/order?prop=%');
 
     // Asserting Email visibility 
     const mailField = await page.locator('div.user__name.mt-5').innerText();
