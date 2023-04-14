@@ -2,6 +2,7 @@ const { test, expect } = require('@playwright/test');
 const LoginPage = require('../page-objects/LoginPage');
 const DashboardPage = require('../page-objects/DashboardPage');
 const CartPage = require('../page-objects/CartPage');
+const OrderPage = require('../page-objects/OrderPage');
 
 test.only('Login and making an order', async ({ page }) => {
     const email = 'aline.bora@spritecloud.com';
@@ -22,19 +23,13 @@ test.only('Login and making an order', async ({ page }) => {
     const cartPage = new CartPage(page);
     await cartPage.addToCart();
 
-    // Asserting Email visibility 
+    // Visiting Order Page and Asserting email visibility
+    const orderPage = new OrderPage(page);
+
     const mailField = await page.locator('div.user__name.mt-5').innerText();
     await expect(mailField).toContain(email);
-    await page.locator('input[class="input txt"]').nth(0).type('123');
-    await page.locator('input[name="coupon"]').type('rahulshettyacademy');
-    await page.locator('input[class="input txt"]').nth(1).type('Qaline Silva');
-    await page.locator('input[placeholder="Select Country"]').type('Neth');
-    await page.locator('button[class="ta-item list-group-item ng-star-inserted"]').nth(0).click();
-    await page.locator('[class="user__name mt-5"] [class="input txt text-validated ng-untouched ng-pristine ng-valid"]').textContent(email);
-
-    //Placing order and check confirmation of purchase page
-    await page.locator('a[class="btnn action__submit ng-star-inserted"]:text("Place Order ")').click();
-    await page.locator('h1[class="hero-primary"]').textContent('Thankyou for the order.');
+    // await orderPage.verifyEmailId();
+    await orderPage.clientOrderInput();
 
     // Getting Order ID Number and asserting on My Orders page
     const orderId = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
