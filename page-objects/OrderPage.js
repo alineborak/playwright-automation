@@ -11,7 +11,6 @@ class OrderPage {
         this.selectCountryInput = page.locator('button[class="ta-item list-group-item ng-star-inserted"]').nth(0);
         this.emailDisplay = page.locator('[class="user__name mt-5"] [class="input txt text-validated ng-untouched ng-pristine ng-valid"]');
         this.placeOrderBtn = page.locator('a[class="btnn action__submit ng-star-inserted"]:text("Place Order ")');
-        this.orderConfirmation = page.locator('h1[class="hero-primary"]');
     }
 
     async verifyEmailId(email) {
@@ -19,7 +18,7 @@ class OrderPage {
     }
 
     async clientOrderInput() {
-        await this.orderUrl.toContain('/client/dashboard/order')
+        await this.orderUrl.toContain('/client/dashboard/order');
         // await this.emailInfo.innerText();
         await this.inputCvv.type('123');
         await this.inputCoupon.type('rahulshettyacademy');
@@ -27,7 +26,6 @@ class OrderPage {
         await this.inputCountryName.type('Neth');
         await this.selectCountryInput.click();
         await this.placeOrderBtn.click();
-        await this.orderConfirmation.textContent('Thankyou for the order.');
     }
 }
 module.exports = OrderPage;
