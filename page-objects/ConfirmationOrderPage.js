@@ -34,10 +34,6 @@ class ConfirmationOrderPage {
         expect(orderId.includes(orderIdDetails)).toBeTruthy();
 
     }
-
-    // async checkOrderDone() {
-    //     const orderIdDetails = this.orderIdField.textContent();
-    // }
 }
 
 module.exports = ConfirmationOrderPage;
