@@ -12,14 +12,15 @@ class ConfirmationOrderPage {
 
     async getOrderConfirmation() {
         await this.orderConfirmation.textContent('Thankyou for the order.');
-        await this.viewMyOrders.click();
-        const getId = await this.orderIdAtConfirmation.textContent();
-        console.log(getId);
-        await this.body.waitFor();
-    }
-
-    async checkOrderId() {
         const orderId = await this.orderIdAtConfirmation.textContent();
+
+        return orderId;
+    }
+    
+    async checkOrderId(orderId) {
+        await this.viewMyOrders.click();
+        await this.body.waitFor();
+
         const rowsWithOrders = await this.page.locator('tbody tr');
         for (let i = 0; i < await rowsWithOrders.count(); ++i) {
             const rowOrderId = await rowsWithOrders.nth(i).locator("th").textContent();
@@ -28,6 +29,10 @@ class ConfirmationOrderPage {
                 break;
             }
         }
+
+        const orderIdDetails = await this.orderIdField.textContent();
+        expect(orderId.includes(orderIdDetails)).toBeTruthy();
+
     }
 
     // async checkOrderDone() {
